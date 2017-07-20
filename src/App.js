@@ -71,8 +71,8 @@ class BooksApp extends React.Component {
     ]
   }
 
-  onChangeShelf = (value, selecteBook) => {
-    console.log(value, selecteBook.id)
+  onChangeShelf = (value, book) => {
+    console.log(book.bookReference.currentBookShelf, value, book.bookReference.id)
   }
 
   render() {
@@ -108,7 +108,10 @@ class BooksApp extends React.Component {
                     <div className="bookshelf-books">
                       <ol className="books-grid">
                         {shelf.shelfBooks.map((singleBook, index) => (
-                          <Book key={index} {...singleBook} onChangeShelf={this.onChangeShelf} />
+                          <Book key={index}
+                            {...singleBook}
+                            onChangeShelf={this.onChangeShelf}
+                            currentBookShelf={shelf.value} />
                         ))}
                       </ol>
                     </div>
