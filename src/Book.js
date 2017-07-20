@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import BookShelfChanger from './BookShelfChanger'
 
 class Book extends Component {
+
   render() {
     return (
       <li>
@@ -11,7 +12,7 @@ class Book extends Component {
             <div className="book-cover"
               style={{ width: 128, height: 193, backgroundImage: this.props.backgroundImage }}>
             </div>
-            <BookShelfChanger />
+            <BookShelfChanger onChangeShelf={this.props.onChangeShelf} />
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">{this.props.author}</div>
