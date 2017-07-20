@@ -12,7 +12,7 @@ class Book extends Component {
             <div className="book-cover"
               style={{ width: 128, height: 193, backgroundImage: this.props.backgroundImage }}>
             </div>
-            <BookShelfChanger onChangeShelf={this.props.onChangeShelf} />
+            <BookShelfChanger onChangeShelf={this.props.onChangeShelf} bookReference={this.props} />
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">{this.props.author}</div>
