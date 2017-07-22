@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 import Book from './Book'
 import './App.css'
@@ -87,10 +87,7 @@ class BooksApp extends React.Component {
         <Route path="/search" render={() => (
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search"
-                onClick={() => this.setState({ showSearchPage: false })}>
-                Close
-              </a>
+              <Link to="/" className="close-search"></Link>
               <div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author" />
               </div>
@@ -126,7 +123,7 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search">Add a book</Link>
             </div>
           </div>
         )} />
