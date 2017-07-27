@@ -28,7 +28,7 @@ class BooksApp extends React.Component {
       let originShelf = Object.assign({}, this.state[originShelfName])
       originShelf.shelfBooks = originShelf.shelfBooks.filter(bookItem => bookItem.id !== book.bookReference.id)
       let targetShelf = this.state[targetShelfName]
-      targetShelf.shelfBooks.push(book.bookReference)
+      targetShelf.shelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
 
       this.setState({
         [originShelfName]: originShelf,
