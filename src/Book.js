@@ -10,7 +10,7 @@ class Book extends Component {
         <div className="book">
           <div className="book-top">
             <div className="book-cover"
-              style={{ width: 128, height: 193, backgroundImage: this.props.backgroundImage }}>
+              style={{ width: 128, height: 193, backgroundImage: `url(${this.props.imageLinks.smallThumbnail})` }}>
             </div>
             <BookShelfChanger
               onChangeShelf={this.props.onChangeShelf}
