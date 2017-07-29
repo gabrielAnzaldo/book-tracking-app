@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
@@ -11,6 +10,8 @@ class SearchPage extends Component {
       resultingBooks: []
     }
   }
+
+  newBooks = []
 
   onChangeSearchQuery = event => {
     const query = event.target.value
@@ -27,14 +28,23 @@ class SearchPage extends Component {
   }
 
   onChangeShelf = (targetShelfName, book) => {
-    console.log(targetShelfName, book)
+    const bookIndex = this.newBooks.findIndex(item => item.id === book.bookReference.id)
+    if (bookIndex < 0) {
+      this.newBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
+    } else {
+      this.newBooks[bookIndex].shelf = targetShelfName
+    }
+  }
+
+  onChangeRoute = () => {
+    this.props.onAddBooksShelfs(this.newBooks)
   }
 
   render() {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link to="/" className="close-search"></Link>
+          <a className="close-search" onClick={this.onChangeRoute}>Back home</a>
           <div className="search-books-input-wrapper">
             <input type="text"
               placeholder="Search by title or author"

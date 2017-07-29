@@ -74,10 +74,21 @@ class BooksApp extends React.Component {
       })
   }
 
+  updateSelectedBooks = selectedBooks => {
+    selectedBooks.forEach(item => {
+      console.log(item)
+    })
+  }
+
   render() {
     return (
       <div className="app">
-        <Route path="/search" component={SearchPage} />
+        <Route path="/search" render={({ history }) => (
+          <SearchPage onAddBooksShelfs={newBooks => {
+            this.updateSelectedBooks(newBooks)
+            history.push('/')
+          }} />
+        )} />
 
         <Route exact path="/" render={() => (
           <div className="list-books">
