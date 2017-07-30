@@ -17,6 +17,10 @@ class SearchPage extends Component {
     read: []
   }
 
+  componentDidMount() {
+    this.inputSearch.focus();
+  }
+
   onChangeSearchQuery = event => {
     const query = event.target.value
     if (query) {
@@ -60,7 +64,8 @@ class SearchPage extends Component {
             <input type="text"
               placeholder="Search by title or author"
               value={this.state.value}
-              onKeyUp={event => this.onChangeSearchQuery(event)} />
+              onKeyUp={event => this.onChangeSearchQuery(event)}
+              ref={(input) => { this.inputSearch = input; }} />
           </div>
         </div>
         <div className="search-books-results">
