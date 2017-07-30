@@ -11,7 +11,11 @@ class SearchPage extends Component {
     }
   }
 
-  newBooks = []
+  selectedBooks = {
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
+  }
 
   onChangeSearchQuery = event => {
     const query = event.target.value
@@ -28,16 +32,21 @@ class SearchPage extends Component {
   }
 
   onChangeShelf = (targetShelfName, book) => {
-    const bookIndex = this.newBooks.findIndex(item => item.id === book.bookReference.id)
-    if (bookIndex < 0) {
-      this.newBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
-    } else {
-      this.newBooks[bookIndex].shelf = targetShelfName
+    if (targetShelfName !== 'none') {
+      let tempShelfBooks = this.selectedBooks[targetShelfName]
+      const bookIndex = tempShelfBooks.findIndex(item => item.id === book.bookReference.id)
+      if (bookIndex < 0) {
+        tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
+      } else {
+        tempShelfBooks[bookIndex].shelf = targetShelfName
+      }
+
+      this.selectedBooks[targetShelfName] = tempShelfBooks
     }
   }
 
   onChangeRoute = () => {
-    this.props.onAddBooksShelfs(this.newBooks)
+    this.props.onAddBooksShelfs(this.selectedBooks)
   }
 
   render() {

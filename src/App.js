@@ -37,7 +37,7 @@ class BooksApp extends React.Component {
       })
 
       BooksAPI.update(book.bookReference, targetShelfName)
-        .then(response => console.log("Book's shelf updated"))
+        .then(() => console.log("Book's shelf updated"))
     }
   }
 
@@ -75,8 +75,12 @@ class BooksApp extends React.Component {
   }
 
   updateSelectedBooks = selectedBooks => {
-    selectedBooks.forEach(item => {
-      console.log(item)
+    Object.keys(selectedBooks).forEach(property => {
+      selectedBooks[property].forEach(newBook => {
+        BooksAPI.update(newBook, property)
+          .then(() => console.log("Book's shelf updated"))
+      })
+      this.updateShelfState(selectedBooks[property].concat(this.state[property].shelfBooks), property)
     })
   }
 
