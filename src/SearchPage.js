@@ -28,10 +28,10 @@ class SearchPage extends Component {
         .then(response => {
           if (response && response.length) {
             this.setState({ resultingBooks: response })
-          } else {
-            this.setState({ resultingBooks: [] })
           }
         })
+    } else {
+      this.setState({ resultingBooks: [] })
     }
   }
 
