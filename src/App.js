@@ -91,7 +91,7 @@ class BooksApp extends React.Component {
           <SearchPage onAddBooksShelfs={newBooks => {
             this.updateSelectedBooks(newBooks)
             history.push('/')
-          }} />
+          }} existingBooks={this.state} />
         )} />
 
         <Route exact path="/" render={() => (
