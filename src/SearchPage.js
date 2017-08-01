@@ -22,7 +22,7 @@ class SearchPage extends Component {
   }
 
   onChangeSearchQuery = event => {
-    const query = event.target.value
+    const query = event.target.value.trim()
     const allExistingBooks = this.props.existingBooks['currentlyReading'].shelfBooks
       .concat(this.props.existingBooks['wantToRead'].shelfBooks)
       .concat(this.props.existingBooks['read'].shelfBooks)
@@ -30,7 +30,7 @@ class SearchPage extends Component {
     if (query) {
       BooksAPI.search(query, 20)
         .then(response => {
-          if (response && response.length) {
+          if (response && response.length > 0) {
             this.setState({
               resultingBooks: response.map(item => {
                 const bookIndex = allExistingBooks.findIndex(bookItem => bookItem.id === item.id)
@@ -41,6 +41,8 @@ class SearchPage extends Component {
                 }
               })
             })
+          } else {
+            this.setState({ resultingBooks: [] })
           }
         })
     } else {
