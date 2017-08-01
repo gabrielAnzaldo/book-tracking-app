@@ -48,16 +48,46 @@ class SearchPage extends Component {
     }
   }
 
+  findBookInShelf = book => {
+    let bookFounded = {
+      id: -1,
+      shelf: ''
+    }
+    const allSelectedBooks = this.selectedBooks['currentlyReading']
+      .concat(this.selectedBooks['wantToRead'])
+      .concat(this.selectedBooks['read'])
+    const bookIndex = allSelectedBooks.findIndex(item => item.id === book.bookReference.id)
+    bookFounded.id = bookIndex
+    if (bookIndex >= 0) {
+      bookFounded.shelf = allSelectedBooks[bookIndex].shelf
+    }
+
+    return bookFounded
+  }
+
   onChangeShelf = (targetShelfName, book) => {
+    let bookFounded = this.findBookInShelf(book)
     if (targetShelfName !== 'none') {
       let tempShelfBooks = this.selectedBooks[targetShelfName]
-      const bookIndex = tempShelfBooks.findIndex(item => item.id === book.bookReference.id)
-      if (bookIndex < 0) {
-        tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
+      if (bookFounded.id >= 0) {
+        if (bookFounded.shelf !== targetShelfName) {
+          tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
+          let tempOldBookShelf = this.selectedBooks[bookFounded.shelf]
+          const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id)
+          tempOldBookShelf.splice(oldIndexBook, 1)
+          this.selectedBooks[bookFounded.shelf] = tempOldBookShelf
+        }
       } else {
-        tempShelfBooks[bookIndex].shelf = targetShelfName
+        tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
       }
       this.selectedBooks[targetShelfName] = tempShelfBooks
+    } else {
+      if (bookFounded.id >= 0) {
+        let tempOldBookShelf = this.selectedBooks[bookFounded.shelf]
+        const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id)
+        tempOldBookShelf.splice(oldIndexBook, 1)
+        this.selectedBooks[bookFounded.shelf] = tempOldBookShelf
+      }
     }
   }
 
