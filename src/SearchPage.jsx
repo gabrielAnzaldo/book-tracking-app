@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Book from './Book';
 import * as BooksAPI from './BooksAPI';
@@ -9,12 +10,6 @@ class SearchPage extends Component {
     this.state = {
       resultingBooks: [],
     };
-  }
-
-  selectedBooks = {
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
   }
 
   componentDidMount() {
@@ -49,23 +44,6 @@ class SearchPage extends Component {
     }
   }
 
-  findBookInShelf = (book) => {
-    const bookFounded = {
-      id: -1,
-      shelf: '',
-    };
-    const allSelectedBooks = this.selectedBooks.currentlyReading
-      .concat(this.selectedBooks.wantToRead)
-      .concat(this.selectedBooks.read);
-    const bookIndex = allSelectedBooks.findIndex(item => item.id === book.bookReference.id);
-    bookFounded.id = bookIndex;
-    if (bookIndex >= 0) {
-      bookFounded.shelf = allSelectedBooks[bookIndex].shelf;
-    }
-
-    return bookFounded;
-  }
-
   onChangeShelf = (targetShelfName, book) => {
     const bookFounded = this.findBookInShelf(book);
     if (targetShelfName !== 'none') {
@@ -74,7 +52,8 @@ class SearchPage extends Component {
         if (bookFounded.shelf !== targetShelfName) {
           tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }));
           const tempOldBookShelf = this.selectedBooks[bookFounded.shelf];
-          const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id);
+          const oldIndexBook = tempOldBookShelf
+            .findIndex(item => item.id === book.bookReference.id);
           tempOldBookShelf.splice(oldIndexBook, 1);
           this.selectedBooks[bookFounded.shelf] = tempOldBookShelf;
         }
@@ -94,13 +73,40 @@ class SearchPage extends Component {
     this.props.onAddBooksShelfs(this.selectedBooks);
   }
 
+  findBookInShelf = (book) => {
+    const bookFounded = {
+      id: -1,
+      shelf: '',
+    };
+    const allSelectedBooks = this.selectedBooks.currentlyReading
+      .concat(this.selectedBooks.wantToRead)
+      .concat(this.selectedBooks.read);
+    const bookIndex = allSelectedBooks.findIndex(item => item.id === book.bookReference.id);
+    bookFounded.id = bookIndex;
+    if (bookIndex >= 0) {
+      bookFounded.shelf = allSelectedBooks[bookIndex].shelf;
+    }
+
+    return bookFounded;
+  }
+
+  selectedBooks = {
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
+  }
+
   render() {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <a className="close-search" style={{ cursor: 'pointer' }} onClick={this.onChangeRoute}>
+          <button
+            className="close-search"
+            style={{ cursor: 'pointer' }}
+            onClick={this.onChangeRoute}
+          >
             Back home
-          </a>
+          </button>
           <div className="search-books-input-wrapper">
             <input
               type="text"
@@ -113,8 +119,8 @@ class SearchPage extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.resultingBooks.map((singleBook, index) => (
-              <Book key={index} {...singleBook} onChangeShelf={this.onChangeShelf} />
+            {this.state.resultingBooks.map(singleBook => (
+              <Book key={singleBook.id} {...singleBook} onChangeShelf={this.onChangeShelf} />
             ))}
           </ol>
         </div>
@@ -122,5 +128,20 @@ class SearchPage extends Component {
     );
   }
 }
+
+SearchPage.propTypes = {
+  onAddBooksShelfs: PropTypes.func.isRequired,
+  existingBooks: PropTypes.shape({
+    currentlyReading: PropTypes.shape({
+      shelfBooks: PropTypes.array.isRequired,
+    }).isRequired,
+    wantToRead: PropTypes.shape({
+      shelfBooks: PropTypes.array.isRequired,
+    }).isRequired,
+    read: PropTypes.shape({
+      shelfBooks: PropTypes.array.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default SearchPage;

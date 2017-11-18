@@ -11,15 +11,47 @@ class BooksApp extends React.Component {
     currentlyReading: {
       shelfTitle: 'Currently Reading',
       shelfBooks: [],
+      id: 0,
     },
     wantToRead: {
       shelfTitle: 'Want to Read',
       shelfBooks: [],
+      id: 1,
     },
     read: {
       shelfTitle: 'Read',
       shelfBooks: [],
+      id: 2,
     },
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then((allBooks) => {
+        if (allBooks && allBooks.length) {
+          const tempCurrentlyReading = [];
+          const tempWantToRead = [];
+          const tempRead = [];
+          allBooks.forEach((item) => {
+            switch (item.shelf) {
+              case 'currentlyReading':
+                tempCurrentlyReading.push(item);
+                break;
+              case 'wantToRead':
+                tempWantToRead.push(item);
+                break;
+              case 'read':
+                tempRead.push(item);
+                break;
+              default:
+                console.log('none');
+            }
+          });
+          this.updateShelfState(tempCurrentlyReading, 'currentlyReading');
+          this.updateShelfState(tempWantToRead, 'wantToRead');
+          this.updateShelfState(tempRead, 'read');
+        }
+      });
   }
 
   onChangeShelf = (targetShelfName, book) => {
@@ -46,35 +78,6 @@ class BooksApp extends React.Component {
     this.setState({
       [shelfName]: Object.assign({}, this.state[shelfName], { shelfBooks: data }),
     });
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then((allBooks) => {
-        if (allBooks && allBooks.length) {
-          let tempCurrentlyReading = [],
-            tempWantToRead = [],
-            tempRead = [];
-          allBooks.forEach((item) => {
-            switch (item.shelf) {
-              case 'currentlyReading':
-                tempCurrentlyReading.push(item);
-                break;
-              case 'wantToRead':
-                tempWantToRead.push(item);
-                break;
-              case 'read':
-                tempRead.push(item);
-                break;
-              default:
-                console.log('none');
-            }
-          });
-          this.updateShelfState(tempCurrentlyReading, 'currentlyReading');
-          this.updateShelfState(tempWantToRead, 'wantToRead');
-          this.updateShelfState(tempRead, 'read');
-        }
-      });
   }
 
   updateSelectedBooks = (selectedBooks) => {
@@ -114,14 +117,14 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  {Object.keys(this.state).map((shelf, index) => (
-                    <div className="bookshelf" key={index}>
+                  {Object.keys(this.state).map(shelf => (
+                    <div className="bookshelf" key={this.state[shelf].shelfTitle.id}>
                       <h2 className="bookshelf-title">{this.state[shelf].shelfTitle}</h2>
                       <div className="bookshelf-books">
                         <ol className="books-grid">
-                          {this.state[shelf].shelfBooks.map((singleBook, index) => (
+                          {this.state[shelf].shelfBooks.map(singleBook => (
                             <Book
-                              key={index}
+                              key={singleBook.id}
                               {...singleBook}
                               onChangeShelf={this.onChangeShelf}
                               currentBookShelf={shelf}
@@ -134,7 +137,7 @@ class BooksApp extends React.Component {
                 </div>
               </div>
               <div className="open-search">
-                <Link to="/search">Add a book</Link>
+                <Link to="/search" href>Add a book</Link>
               </div>
             </div>
           )}
