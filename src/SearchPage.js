@@ -1,100 +1,97 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import Book from './Book'
-import * as BooksAPI from './BooksAPI'
+import Book from './Book';
+import * as BooksAPI from './BooksAPI';
 
 class SearchPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      resultingBooks: []
-    }
+      resultingBooks: [],
+    };
   }
 
   selectedBooks = {
     currentlyReading: [],
     wantToRead: [],
-    read: []
+    read: [],
   }
 
   componentDidMount() {
     this.inputSearch.focus();
   }
 
-  onChangeSearchQuery = event => {
-    const query = event.target.value.trim()
-    const allExistingBooks = this.props.existingBooks['currentlyReading'].shelfBooks
-      .concat(this.props.existingBooks['wantToRead'].shelfBooks)
-      .concat(this.props.existingBooks['read'].shelfBooks)
+  onChangeSearchQuery = (event) => {
+    const query = event.target.value.trim();
+    const allExistingBooks = this.props.existingBooks.currentlyReading.shelfBooks
+      .concat(this.props.existingBooks.wantToRead.shelfBooks)
+      .concat(this.props.existingBooks.read.shelfBooks);
 
     if (query) {
       BooksAPI.search(query, 20)
-        .then(response => {
+        .then((response) => {
           if (response && response.length > 0) {
             this.setState({
-              resultingBooks: response.map(item => {
-                const bookIndex = allExistingBooks.findIndex(bookItem => bookItem.id === item.id)
+              resultingBooks: response.map((item) => {
+                const bookIndex = allExistingBooks.findIndex(bookItem => bookItem.id === item.id);
                 if (bookIndex >= 0) {
-                  return Object.assign({}, item, { shelf: allExistingBooks[bookIndex].shelf })
-                } else {
-                  return item
+                  return Object.assign({}, item, { shelf: allExistingBooks[bookIndex].shelf });
                 }
-              })
-            })
+                return item;
+              }),
+            });
           } else {
-            this.setState({ resultingBooks: [] })
+            this.setState({ resultingBooks: [] });
           }
-        })
+        });
     } else {
-      this.setState({ resultingBooks: [] })
+      this.setState({ resultingBooks: [] });
     }
   }
 
-  findBookInShelf = book => {
-    let bookFounded = {
+  findBookInShelf = (book) => {
+    const bookFounded = {
       id: -1,
-      shelf: ''
-    }
-    const allSelectedBooks = this.selectedBooks['currentlyReading']
-      .concat(this.selectedBooks['wantToRead'])
-      .concat(this.selectedBooks['read'])
-    const bookIndex = allSelectedBooks.findIndex(item => item.id === book.bookReference.id)
-    bookFounded.id = bookIndex
+      shelf: '',
+    };
+    const allSelectedBooks = this.selectedBooks.currentlyReading
+      .concat(this.selectedBooks.wantToRead)
+      .concat(this.selectedBooks.read);
+    const bookIndex = allSelectedBooks.findIndex(item => item.id === book.bookReference.id);
+    bookFounded.id = bookIndex;
     if (bookIndex >= 0) {
-      bookFounded.shelf = allSelectedBooks[bookIndex].shelf
+      bookFounded.shelf = allSelectedBooks[bookIndex].shelf;
     }
 
-    return bookFounded
+    return bookFounded;
   }
 
   onChangeShelf = (targetShelfName, book) => {
-    let bookFounded = this.findBookInShelf(book)
+    const bookFounded = this.findBookInShelf(book);
     if (targetShelfName !== 'none') {
-      let tempShelfBooks = this.selectedBooks[targetShelfName]
+      const tempShelfBooks = this.selectedBooks[targetShelfName];
       if (bookFounded.id >= 0) {
         if (bookFounded.shelf !== targetShelfName) {
-          tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
-          let tempOldBookShelf = this.selectedBooks[bookFounded.shelf]
-          const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id)
-          tempOldBookShelf.splice(oldIndexBook, 1)
-          this.selectedBooks[bookFounded.shelf] = tempOldBookShelf
+          tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }));
+          const tempOldBookShelf = this.selectedBooks[bookFounded.shelf];
+          const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id);
+          tempOldBookShelf.splice(oldIndexBook, 1);
+          this.selectedBooks[bookFounded.shelf] = tempOldBookShelf;
         }
       } else {
-        tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }))
+        tempShelfBooks.push(Object.assign({}, book.bookReference, { shelf: targetShelfName }));
       }
-      this.selectedBooks[targetShelfName] = tempShelfBooks
-    } else {
-      if (bookFounded.id >= 0) {
-        let tempOldBookShelf = this.selectedBooks[bookFounded.shelf]
-        const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id)
-        tempOldBookShelf.splice(oldIndexBook, 1)
-        this.selectedBooks[bookFounded.shelf] = tempOldBookShelf
-      }
+      this.selectedBooks[targetShelfName] = tempShelfBooks;
+    } else if (bookFounded.id >= 0) {
+      const tempOldBookShelf = this.selectedBooks[bookFounded.shelf];
+      const oldIndexBook = tempOldBookShelf.findIndex(item => item.id === book.bookReference.id);
+      tempOldBookShelf.splice(oldIndexBook, 1);
+      this.selectedBooks[bookFounded.shelf] = tempOldBookShelf;
     }
   }
 
   onChangeRoute = () => {
-    this.props.onAddBooksShelfs(this.selectedBooks)
+    this.props.onAddBooksShelfs(this.selectedBooks);
   }
 
   render() {
@@ -105,11 +102,13 @@ class SearchPage extends Component {
             Back home
           </a>
           <div className="search-books-input-wrapper">
-            <input type="text"
+            <input
+              type="text"
               placeholder="Search by title or author"
               value={this.state.value}
               onKeyUp={event => this.onChangeSearchQuery(event)}
-              ref={(input) => { this.inputSearch = input; }} />
+              ref={(input) => { this.inputSearch = input; }}
+            />
           </div>
         </div>
         <div className="search-books-results">
@@ -120,8 +119,8 @@ class SearchPage extends Component {
           </ol>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default SearchPage
+export default SearchPage;
