@@ -8,5 +8,8 @@ module.exports = {
         "fetch": true,
         "localStorage": true,
         "document": true,
+    },
+    "env": {
+        "jest": true,
     }
 };
