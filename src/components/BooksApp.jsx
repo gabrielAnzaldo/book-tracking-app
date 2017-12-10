@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
 
-import * as BooksAPI from './BooksAPI';
+import * as BooksAPI from '../services/api/BooksAPI';
 import Book from './Book';
 import SearchPage from './SearchPage';
-import './App.css';
+import '../components/styles/index.css';
 
 class BooksApp extends React.Component {
   state = {
