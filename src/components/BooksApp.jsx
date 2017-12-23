@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import uuidv4 from 'uuid/v4';
 
 import * as BooksAPI from '../services/api/BooksAPI';
-import Book from './Book';
+import Shelf from './Shelf';
 import SearchPage from './SearchPage';
 import '../components/styles/index.css';
 
@@ -118,21 +119,12 @@ class BooksApp extends React.Component {
               <div className="list-books-content">
                 <div>
                   {Object.keys(this.state).map(shelf => (
-                    <div className="bookshelf" key={this.state[shelf].shelfTitle.id}>
-                      <h2 className="bookshelf-title">{this.state[shelf].shelfTitle}</h2>
-                      <div className="bookshelf-books">
-                        <ol className="books-grid">
-                          {this.state[shelf].shelfBooks.map(singleBook => (
-                            <Book
-                              key={singleBook.id}
-                              {...singleBook}
-                              onChangeShelf={this.onChangeShelf}
-                              currentBookShelf={shelf}
-                            />
-                          ))}
-                        </ol>
-                      </div>
-                    </div>
+                    <Shelf
+                      key={uuidv4()}
+                      keyShelf={shelf}
+                      shelfData={this.state[shelf]}
+                      onChangeShelf={this.onChangeShelf}
+                    />
                   ))}
                 </div>
               </div>

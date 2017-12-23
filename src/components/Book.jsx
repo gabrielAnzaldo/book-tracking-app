@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 
 import BookShelfChanger from './BookShelfChanger';
 
@@ -18,7 +19,7 @@ const Book = props => (
       </div>
       <div className="book-title">{props.title}</div>
       {props.authors && props.authors.map(author => (
-        <div key={author.id} className="book-authors">{author}</div>
+        <div key={uuidv4()} className="book-authors">{author}</div>
       ))}
     </div>
   </li>
