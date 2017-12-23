@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 
+import BookAuthor from './BookAuthor';
 import BookShelfChanger from './BookShelfChanger';
 
 const Book = props => (
@@ -19,16 +20,20 @@ const Book = props => (
       </div>
       <div className="book-title">{props.title}</div>
       {props.authors && props.authors.map(author => (
-        <div key={uuidv4()} className="book-authors">{author}</div>
+        <BookAuthor key={uuidv4()} author={author} />
       ))}
     </div>
   </li>
 );
 
+Book.defaultProps = {
+  authors: [],
+};
+
 Book.propTypes = {
   onChangeShelf: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string),
   imageLinks: PropTypes.shape({
     smallThumbnail: PropTypes.string.isRequired,
   }).isRequired,
