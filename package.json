@@ -47,7 +47,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "jest --verbose --colors",
+    "test": "jest --verbose --colors --coverage",
+    "test:watch": "jest --verbose --colors --coverage --watch",
     "lint": "eslint --ext .js --ext .jsx ."
   },
   "pre-commit": [
@@ -58,7 +59,8 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.1",
-    "enzyme": "3.2.0",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
