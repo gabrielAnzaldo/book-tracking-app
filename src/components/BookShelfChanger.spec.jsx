@@ -46,7 +46,9 @@ describe('<BookShelfChanger />', () => {
     currentBookShelf: 'currentlyReading',
   };
   it('Should render properly', () => {
-    const wrapper = shallow(<BookShelfChanger bookReference={fakeBookReference} />);
+    const wrapper = shallow(<BookShelfChanger
+      bookReference={fakeBookReference}
+    />);
     expect(wrapper.exists()).toBeTruthy();
   });
 

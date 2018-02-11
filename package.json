@@ -48,7 +48,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "jest --verbose --colors --coverage",
-    "test:watch": "jest --verbose --colors --coverage --watch",
+    "test:watch": "jest --verbose --colors --coverage --watchAll",
     "lint": "eslint --ext .js --ext .jsx ."
   },
   "pre-commit": [
@@ -69,6 +69,7 @@
     "pre-commit": "1.2.2"
   },
   "jest": {
+    "coverageReporters": ["text-summary"],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
