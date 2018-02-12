@@ -24,7 +24,7 @@ class BooksApp extends React.Component {
       shelfBooks: [],
       id: 2,
     },
-  }
+  };
 
   componentDidMount() {
     BooksAPI.getAll()
