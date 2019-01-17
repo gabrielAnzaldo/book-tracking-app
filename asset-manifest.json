@@ -1,9 +1,14 @@
 {
-  "main.css": "static/css/main.4f199267.css",
-  "main.css.map": "static/css/main.4f199267.css.map",
-  "main.js": "static/js/main.1df5a8bc.js",
-  "main.js.map": "static/js/main.1df5a8bc.js.map",
-  "static/media/add.svg": "static/media/add.bb9363b8.svg",
-  "static/media/arrow-back.svg": "static/media/arrow-back.3687aa98.svg",
-  "static/media/arrow-drop-down.svg": "static/media/arrow-drop-down.78c6f53b.svg"
+  "main.css": "/book-tracking-app/static/css/main.56e9ec49.chunk.css",
+  "main.js": "/book-tracking-app/static/js/main.3da27fe8.chunk.js",
+  "main.js.map": "/book-tracking-app/static/js/main.3da27fe8.chunk.js.map",
+  "static/js/1.fa92c112.chunk.js": "/book-tracking-app/static/js/1.fa92c112.chunk.js",
+  "static/js/1.fa92c112.chunk.js.map": "/book-tracking-app/static/js/1.fa92c112.chunk.js.map",
+  "runtime~main.js": "/book-tracking-app/static/js/runtime~main.122e707b.js",
+  "runtime~main.js.map": "/book-tracking-app/static/js/runtime~main.122e707b.js.map",
+  "static/media/logo.svg": "/book-tracking-app/static/media/logo.5d5d9eef.svg",
+  "static/css/main.56e9ec49.chunk.css.map": "/book-tracking-app/static/css/main.56e9ec49.chunk.css.map",
+  "index.html": "/book-tracking-app/index.html",
+  "precache-manifest.6fc510c1757522516269859b563f3ba4.js": "/book-tracking-app/precache-manifest.6fc510c1757522516269859b563f3ba4.js",
+  "service-worker.js": "/book-tracking-app/service-worker.js"
 }
