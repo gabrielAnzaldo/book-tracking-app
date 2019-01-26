@@ -6,6 +6,6 @@ import './index.css';
 import BooksApp from './components/BooksApp';
 
 ReactDOM.render(
-  <BrowserRouter><BooksApp /></BrowserRouter>,
+  <BrowserRouter basename="/"><BooksApp /></BrowserRouter>,
   document.getElementById('root'),
 );
