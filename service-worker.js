@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/book-tracking-app/precache-manifest.818bbcaaf87e71e69ff7c85d4180e821.js"
+  "/book-tracking-app/precache-manifest.b18988399c480651b3ceac877dd3732f.js"
 );
 
 workbox.clientsClaim();
