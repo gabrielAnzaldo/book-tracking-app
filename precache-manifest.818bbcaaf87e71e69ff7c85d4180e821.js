@@ -16,19 +16,19 @@ self.__precacheManifest = [
     "url": "/book-tracking-app/static/js/runtime~main.122e707b.js"
   },
   {
-    "revision": "8c782d5c6c566887ac5b",
-    "url": "/book-tracking-app/static/js/main.8c782d5c.chunk.js"
+    "revision": "40e38e33360170caaaa4",
+    "url": "/book-tracking-app/static/js/main.40e38e33.chunk.js"
   },
   {
     "revision": "9b25136842d7b875534a",
     "url": "/book-tracking-app/static/js/1.9b251368.chunk.js"
   },
   {
-    "revision": "8c782d5c6c566887ac5b",
+    "revision": "40e38e33360170caaaa4",
     "url": "/book-tracking-app/static/css/main.50a5a414.chunk.css"
   },
   {
-    "revision": "eadd791c5256c82b41b13e81d9275751",
+    "revision": "e1ac6e449cd6e74dba2b604d25df2b10",
     "url": "/book-tracking-app/index.html"
   }
 ];
